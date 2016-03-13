@@ -8,10 +8,19 @@
     require_once __DIR__.'/../src/Record.php';
     session_start();
 
-    $server = 'mysql:host=localhost;dbname=discogs';
-    $user = 'root';
-    $password = 'root';
-    $DB = new PDO($server, $user, $password);
+    // $server = 'mysql:host=localhost;dbname=discogs';
+    // $user = 'root';
+    // $password = 'root';
+    // $DB = new PDO($server, $user, $password);
+
+    $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+
+    $server = $url["host"];
+    $username = $url["user"];
+    $password = $url["pass"];
+    $db = substr($url["path"], 1);
+
+    $conn = new mysqli($server, $username, $password, $db);
 
 
     // session_start();
